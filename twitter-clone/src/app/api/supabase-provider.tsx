@@ -10,6 +10,12 @@ import { Input } from "../components/ui/input"
 import { Button } from "../components/ui/button"
 import { Toaster, toast } from "sonner";
 
+import * as dotenv from 'dotenv';
+
+dotenv.config({
+    path: '.env.local',
+  });
+
 
 type SupabaseContext = {
     supabase: SupabaseClient<Database>;

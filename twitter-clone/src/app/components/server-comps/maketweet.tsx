@@ -3,11 +3,13 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies, headers } from "next/headers";
 import { randomUUID } from "crypto";
 import { SupabaseClient } from "@supabase/supabase-js";
+import { db } from "@/lib/db";
 
 import { revalidatePath } from "next/cache";
 import MakeTweetForm from "../client-comps/composetweetform";
 import type { Database } from "@/lib/supabase.types";
 import { useRouter } from "next/router";
+import { tweets } from "@/lib/db/schema";
 
 const ComposeTweet = () => {
   async function submitTweet(formData: FormData) {
@@ -36,10 +38,25 @@ const ComposeTweet = () => {
 
     if (userError) return;
 
-    const { data, error } = await supabaseServer.from("tweets").insert({
+/*     const { data, error } = await supabaseServer.from("tweets").insert({
       profile_id: userData.user.id,
       text: tweet.toString(),
       id: randomUUID(),
+    }); */
+
+    let err = "";
+
+    const res = await db
+    .insert(tweets)
+    .values({
+      text: tweet.toString(),
+      id: randomUUID(),
+      profileId: userData.user.id,
+    })
+    .returning()
+    .catch((error) => {
+      console.log(error);
+      err = "something wrong with server";
     });
 
     revalidatePath('')
