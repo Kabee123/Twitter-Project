@@ -1,0 +1,1 @@
+Twitter clone project using SupaBase, Tailwind CSS, and Typescript, using the following video as reference https://www.youtube.com/watch?v=v9XW00q8Zpg&list=PLVwowPSC8wqyHTELmQ794ZVERg3iEPxKD&ab_channel=ClubOfCoders
